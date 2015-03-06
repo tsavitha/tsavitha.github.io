@@ -1,0 +1,8 @@
+Resources referred to..
+
+
+1. jQuery - http://jquery.com
+2. Bootstrap - http://getbootstrap.com
+3. Javascript - https://developer.mozilla.org/en-US/docs/Web/JavaScript
+4. http://www.w3schools.com
+5. https://developers.google.com/maps/documentation/javascript/tutorial
