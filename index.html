@@ -1,90 +1,166 @@
 <!DOCTYPE html>
-<!--
-This HTML document contains the layout of the website.
--->
 <html>
 <head>
-  <!-- This tells the browser how to read the document. -->
-  <meta charset="utf-8">
+    <!-- This tells the browser how to read the document. -->
+    <meta charset="utf-8">
 
-  <!-- Tells the browser what the title of this page should be. -->
-  <title>Resume - Savitha Thiyagarajan</title>
+    <!-- Tells the browser what the title of this page should be. -->
+    <title>Effective JavaScript: Frogger</title>
 
-  <!-- Load the page and bootstrap stylesheets -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
+    <!-- Load the page and bootstrap stylesheets -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 
-  <!-- Load the different javascript files used in the project -->
-  <script src="js/namespace.js"></script>
-  <script src="js/jQuery.js"></script>
-  <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
-  <script src="js/helper.js"></script>
+    <!-- Load the different javascript files used in the project -->
+    <script src="js/jQuery.js"></script>
+    <script src="js/namespace.js"></script>
+    <script src="js/resources.js"></script>
+    <script src="js/app.js"></script>
 
-  <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width">
 </head>
-
 <body>
 <div id="main" class="container">
+    <div id="title-imgage">
+        <img src="images/LetterF.png" alt="F">
+        <img src="images/LetterR.png" alt="R">
+        <img src="images/LetterO.png" alt="O">
+        <img src="images/LetterG.png" alt="G">
+        <img src="images/LetterG.png" alt="G">
+        <img src="images/LetterE.png" alt="E">
+        <img src="images/LetterR.png" alt="R">
+    </div>
 
     <!--
-    Everything from here to the <script> tag below is the skeleton of the
-    website. This code will add information to each of the sections of the
-    resume below.
+      * Div that displays the welcome message
+      -->
+
+    <div class="jumbotron" id="welcome-msg">
+        <h1>
+            Hello!! Welcome to Frogger!
+        </h1>
+
+        <p>
+            Hope you enjoy playing this simple game :-) <br>
+            Please click on the 'New Game' button to get started.... <br>
+            Use the 'Quit Game' button to quit your current game... <br>
+            Here are the
+            <a id="game-rules" data-toggle="modal" data-target="#rules-modal">Rules</a>,
+            if you need to take a look.
+        </p>
+    </div>
+
+    <!--
+      * Div that displays the New and Quit Game buttons
+      -->
+
+    <div class="menu">
+        <a class="btn btn-lg btn-success" href="#game" role="button" id="new-game">New Game</a>
+        <a class="btn btn-lg btn-success" href="#game" role="button" id="stop-game">Quit Game</a>
+    </div>
+
+    <!--
+      * Div that displays the Game surface
+      -->
+
+    <div id="game">
+        <div id="game-summary" class="row">
+            <div class="col-lg-1 col-md-1 col-md-offset-4 col-lg-offset-4">
+                <img src="images/Heart.png" class="game-summary-icon" alt="Life Remaining">
+            </div>
+            <div class="col-lg-1 col-md-1">
+                <h3 id="life" class="game-summary-table">3</h3>
+            </div>
+            <div class="col-lg-1 col-md-1">
+                <img src="images/star.png" class="game-summary-icon" alt="Total Points">
+            </div>
+            <div class="col-lg-1 col-md-1">
+                <h3 id="points" class="game-summary-table">0</h3>
+            </div>
+        </div>
+
+        <div id="canvas-placeholder"></div>
+    </div>
+
+    <!--
+      * Modal dialog that displays the rules of the Frogger Game.
+      aria-labelledby="rules-modal-label"
+      -->
+
+    <div class="modal fade" id="rules-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h1 class="modal-title">Rules of the Frogger Game</h1>
+                </div>
+                <div class="modal-body">
+                        The game surface has 2 rows of grass, 3 rows of stones and a row of water. <br>
+                        There are bugs running across the stone rows that are the enemies and a rock on one of the
+                        stone rows that the player has to avoid. <br>
+                        There are gems for extra points - <br>
+                        <ul id="gems">
+                            <li>Orange - 5 pts</li>
+                            <li>Blue - 15 pts</li>
+                            <li>Green - 25 pts</li>
+                            <li>Star - 50 pts</li>
+                        </ul>
+                        The player starts with 3 lives. <br>
+                        The aim of the game is for the player to start on the grass rows, move one square at a time across
+                        the stones and get to the water without being hit by the bugs or colliding with a rock. <br>
+                        The player looses a life everytime he hits a rock or bug. When the player looses all 3 lives, he is
+                        prompted either to start a new game or quit. <br>
+                        The player gets 200 points everytime he reaches the water and and the game is reset to play again. <br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+      * Modal dialog that displays the Summary of the most recent game.
+      aria-labelledby="game-summary-modal-label"
+      -->
+
+    <div class="modal fade" id="game-summary-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h2 class="modal-title">Final Game Summary</h2>
+                </div>
+                <div class="modal-body">
+                        Hope you enjoyed playing Frogger. <br>
+                        Here's your most recent game summary.....<br>
+                        No. of Gems collected -
+                    <ul>
+                        <li>Orange Gems: <span id="orange"></span></li>
+                        <li>Blue Gems: <span id="blue"></span></li>
+                        <li>Green Gems: <span id="green"></span></li>
+                        <li>Stars: <span id="star"></span></li>
+                        <li>Total Points: <span id="total"></span></li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    The next line tells the browser where to download the JavaScript file.
+    engine.js contains the game loop code and code to render the images of
+    the game surface.
     -->
 
-  <div id="picture" class="col-lg-4 col-md-4 col-lg-offset-4 col-md-offset-4"></div>
-  <div id="header">
-    <div id="name"></div>
-    <div id="location"></div>
-    <hr>
-    <div class="row">
-      <div class="col-lg-6 col-md-6">
-        <div id="welcome-msg"></div>
-        <div id="headerContacts" class=""></div>
-      </div>
-      <div id="skills" class="col-lg-6 col-md-6"></div>
-    </div>
-  </div>
-
-  <div id="workExperience" class="gray">
-      <a data-toggle="collapse" href="#work-content" aria-expanded="false" aria-controls="work-content">
-        <h2>Work Experience</h2>
-      </a>
-      <div id="work-content" class="collapse well white"></div>
-  </div>
-  <div id="projects" class="gray">
-      <a data-toggle="collapse" href="#project-content" aria-expanded="false" aria-controls="project-content">
-        <h2>Projects</h2>
-      </a>
-
-    <div id="project-content" class="collapse well white"></div>
-  </div>
-  <div id="education" class="gray">
-    <a data-toggle="collapse" href="#education-content" aria-expanded="false" aria-controls="education-content">
-      <h2>Education</h2>
-    </a>
-
-    <div id="education-content" class="collapse well white"></div>
-  </div>
-  <div id="mapDiv" class="gray">
-    <a href="#mapDiv"><h2>Where I've Lived and Worked</h2></a>
-  </div>
-
-  <div id="letsConnect" class='dark-gray'>
-    <h2 class='orange center-text'>Let's Connect</h2>
-
-    <div id="footerContacts" class="row dark-gray"></div>
-  </div>
-  </div>
-
-  <!--
-  The next line tells the browser where to download the JavaScript file.
-  resumeBuilder.js contains the code that builds the resume dynamically
-  when this website, index.html, is opened.
-  -->
-
-  <script src="js/resumeBuilder.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-
+    <script src="js/engine.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</div>
 </body>
 </html>

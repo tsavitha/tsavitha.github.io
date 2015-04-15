@@ -5,4 +5,4 @@ Resources referred to..
 2. Bootstrap - http://getbootstrap.com
 3. Javascript - https://developer.mozilla.org/en-US/docs/Web/JavaScript
 4. http://www.w3schools.com
-5. https://developers.google.com/maps/documentation/javascript/tutorial
+5. Javascript Animations - http://www.kirupa.com/html5/animating_with_requestAnimationFrame.htm
